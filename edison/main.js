@@ -12,6 +12,7 @@ writeLCD("Not Monitoring", 0,0,255);
 
 
 var monitoring = false;
+var intervalId;
 
 //Set up our node mailer
 var nodemailer = require("nodemailer");
@@ -39,7 +40,6 @@ function monitoringActivity(){
 
 	//Read our sensor
 	var motionSensorTriggered = motionSensor.read();
-  console.log ("Monitoring")
 	//Do stuff if our sensor is read HIGH
 	if(motionSensorTriggered){
 		exec("wget -O /home/root/image.jpg http://webcam.local:9000/?action=snapshot", 5000);
@@ -61,22 +61,8 @@ function monitoringActivity(){
 			}
 			smtpTransport.close();
 		});
-
-
-    //We don't want 5 million emails, so we want to wait a few seconds
-  //(in this case, 30 seconds) before sending another email. The timeout
-  //is in milliseconds.  So, for 1 minute, you would use 60000.
-    setTimeout(monitoringActivity, 30000);
-
- 	}else{
- 		//Our motion sensor wasn't triggered, so we don't need to wait as long.
- 		// 1/10 of a second seems about right and allows our Edison to do other
- 		// things in the background.
- 		setTimeout(monitoringActivity, 100);
-
-    if (monitoring == false){return;}
-
 	}
+	return;
 }
 
 
@@ -89,11 +75,12 @@ function periodicActivity()
     console.log("Monitoring")
     writeLCD("Monitoring",255,0,0)
     monitoring = true;
-    monitoringActivity();
+    intervalId = setInterval(monitoringActivity,10000);
   }
   else if (monitoring == true && button.value()) {
     console.log("Not Monitoring")
     writeLCD("Not Monitoring",0,0,255)
+	clearInterval(intervalId);
     monitoring = false;
   }
 }

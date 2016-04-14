@@ -49,8 +49,8 @@ function monitoringActivity(){
 			to: "Vaghesh Patel <vagheshp@gmail.com>",
 			subject: "Possible Intruder Alert",
       			attachments:[{   // file on disk as an attachment
-            			filename: '123.jpg',
-            			path: '/home/root/123.jpg' // stream this file
+            			filename: 'image.jpg',
+            			path: '/home/root/image.jpg' // stream this file
         		}],
 			text: "Hey! Something activated your motion sensor!"
 		}, function(error, response){ //Send a report of the message to the console

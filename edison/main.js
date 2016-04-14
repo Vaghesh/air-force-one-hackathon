@@ -78,7 +78,7 @@ function periodicActivity()
     armed = true;
     setTimeout(armedActivity(),10000);
   }
-  else if (armed == true && button.value()) {
+  else if (monitoring == true && button.value()) {
     console.log("Not Monitoring")
     writeLCD("Not Monitoring",0,0,255)
     armed = false;

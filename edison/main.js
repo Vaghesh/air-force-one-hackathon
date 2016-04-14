@@ -15,11 +15,12 @@ var monitoring = false;
 
 //Set up our node mailer
 var nodemailer = require("nodemailer");
+// For Google account, you need to turn on less secure option from your account.
 var smtpTransport = nodemailer.createTransport({
   service: "Gmail",
 	auth: {
-		user: "vagheshp@gmail.com",
-		pass: "nisargdesai"
+		user: "xxx@xxx.com",
+		pass: "xxxxxxxx"
 	}
 });
 

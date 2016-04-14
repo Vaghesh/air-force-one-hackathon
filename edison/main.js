@@ -34,11 +34,11 @@ function writeLCD(lcdtext,r,g,b){
 
 //Here is our sensing function:
 
-function monitoring(){
+function monitoringActivity(){
 
 	//Read our sensor
 	var motionSensorTriggered = motionSensor.read();
-
+  console.log ("Monitoring")
 	//Do stuff if our sensor is read HIGH
 	if(motionSensorTriggered){
 		exec("wget -O /home/root/image.jpg http://webcam.local:9000/?action=snapshot", 5000);
@@ -56,11 +56,24 @@ function monitoring(){
 			if(error){
 				console.log(error);
 			}else{
-        			writeLCD("Message Sent",255,255,255)
 				console.log("Message sent: " + response.message);
 			}
 			smtpTransport.close();
 		});
+
+
+    //We don't want 5 million emails, so we want to wait a few seconds
+  //(in this case, 30 seconds) before sending another email. The timeout
+  //is in milliseconds.  So, for 1 minute, you would use 60000.
+    setTimeout(monitoringActivity, 30000);
+
+ 	}else{
+ 		//Our motion sensor wasn't triggered, so we don't need to wait as long.
+ 		// 1/10 of a second seems about right and allows our Edison to do other
+ 		// things in the background.
+ 		setTimeout(monitoringActivity, 100);
+
+    if (monitoring == false){return;}
 
 	}
 }
@@ -68,20 +81,19 @@ function monitoring(){
 
 
 //Start sensing!
-//armedActivity();
 
 function periodicActivity()
 {
   if (monitoring == false && button.value()){
     console.log("Monitoring")
     writeLCD("Monitoring",255,0,0)
-    armed = true;
-    setTimeout(armedActivity(),10000);
+    monitoring = true;
+    monitoringActivity();
   }
   else if (monitoring == true && button.value()) {
     console.log("Not Monitoring")
     writeLCD("Not Monitoring",0,0,255)
-    armed = false;
+    monitoring = false;
   }
 }
 

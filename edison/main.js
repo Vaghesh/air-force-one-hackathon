@@ -43,7 +43,8 @@ function armedActivity()
 
 	//Do stuff if our sensor is read HIGH
 	if(motionSensorTriggered){
-    execSync("wget -O /home/root/123.jpeg http://webcam.local:9000/?action=snapshot &");
+		
+    execSync("wget -O /home/root/image.jpg http://webcam.local:9000/?action=snapshot", 5000);
 		//Send our email message
 		smtpTransport.sendMail({
 			from: "Vaghesh Patel <vagheshp@gmail.com>",

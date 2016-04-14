@@ -8,9 +8,10 @@ var motionSensor = new mraa.Gpio(5);
 var button = new groveSensor.GroveButton(6);
 var mylcd = new (require("jsupm_i2clcd").Jhd1313m1)(6, 0x3E, 0x62);
 motionSensor.dir(mraa.DIR_IN);
-mylcd.setColor(0,0,0);
+writeLCD("Not Monitoring", 0,0,255);
 
-var armed = false;
+
+var monitoring = false;
 
 //Set up our node mailer
 var nodemailer = require("nodemailer");
@@ -33,7 +34,7 @@ function writeLCD(lcdtext,r,g,b){
 
 //Here is our sensing function:
 
-function armedActivity(){
+function monitoring(){
 
 	//Read our sensor
 	var motionSensorTriggered = motionSensor.read();
@@ -69,19 +70,20 @@ function armedActivity(){
 //Start sensing!
 //armedActivity();
 
-function monitoring()
+function periodicActivity()
 {
-  if (armed == false && button.value()){
-    console.log("Armed")
-    writeLCD("Armed",255,0,0)
+  if (monitoring == false && button.value()){
+    console.log("Monitoring")
+    writeLCD("Monitoring",255,0,0)
     armed = true;
     setTimeout(armedActivity(),10000);
   }
   else if (armed == true && button.value()) {
-    console.log("Disarmed")
-    writeLCD("Disarmed",0,0,255)
+    console.log("Not Monitoring")
+    writeLCD("Not Monitoring",0,0,255)
     armed = false;
   }
 }
 
-setInterval(monitoring,1000);
+console.log("Press button to Monitor your cube")
+setInterval(periodicActivity,1000);

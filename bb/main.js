@@ -2,6 +2,7 @@
 var exec = require('sync-exec');
 var b = require('bonescript');
 var nodemailer = require("nodemailer");
+var Client = require("ibmiotf");
 
 
 
@@ -19,6 +20,14 @@ var smtpTransport = nodemailer.createTransport({
 	}
 });
 
+var config = {
+    "org" : "quickstart",
+    "id" : "xxxxxxxx",
+    "type" : "iotsensor"
+};
+
+var deviceClient = new Client.IotfDevice(config);
+deviceClient.connect();
 
 
 
@@ -29,6 +38,7 @@ function monitoringActivity(){
 	var motionSensorTriggered = b.digitalRead('P9_26');
 	//Do stuff if our sensor is read HIGH
 	if(motionSensorTriggered){
+		deviceClient.publish("status","json",'{"d" : { "pir" : 1 }}');
 		exec("wget -O /root/image.jpg http://localhost:9000/?action=snapshot", 5000);
 		//Send our email message
 		smtpTransport.sendMail({
@@ -48,6 +58,9 @@ function monitoringActivity(){
 			}
 			smtpTransport.close();
 		});
+ 	}
+ 	else{
+ 		deviceClient.publish("status","json",'{"d" : { "pir" : 0 }}');
  	}
  	return;
 }

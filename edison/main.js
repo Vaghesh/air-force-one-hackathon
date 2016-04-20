@@ -3,6 +3,7 @@
 var mraa = require('mraa');
 var groveSensor = require('jsupm_grove');
 var exec = require('sync-exec');
+var Client = require("ibmiotf");
 
 var motionSensor = new mraa.Gpio(5);
 var button = new groveSensor.GroveButton(6);
@@ -24,6 +25,14 @@ var smtpTransport = nodemailer.createTransport({
 		pass: "xxxxxxxx"
 	}
 });
+var config = {
+    "org" : "quickstart",
+    "id" : "xxxxxxxxxx",
+    "type" : "iotsensor"
+};
+
+var deviceClient = new Client.IotfDevice(config);
+deviceClient.connect();
 
 
 function writeLCD(lcdtext,r,g,b){
@@ -42,6 +51,7 @@ function monitoringActivity(){
 	var motionSensorTriggered = motionSensor.read();
 	//Do stuff if our sensor is read HIGH
 	if(motionSensorTriggered){
+		deviceClient.publish("status","json",'{"d" : { "pir" : 1}}');
 		exec("wget -O /home/root/image.jpg http://webcam.local:9000/?action=snapshot", 5000);
 		//Send our email message
 		smtpTransport.sendMail({
@@ -61,6 +71,9 @@ function monitoringActivity(){
 			}
 			smtpTransport.close();
 		});
+	}
+	else{
+		deviceClient.publish("status","json",'{"d" : { "pir" : 0}}');
 	}
 	return;
 }

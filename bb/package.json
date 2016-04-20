@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "nodemailer": "^2.3.1",
-    "sync-exec": "^0.6.2"
+    "sync-exec": "^0.6.2",
+    "ibmiotf":"*"
   }
 }

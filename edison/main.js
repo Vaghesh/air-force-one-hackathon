@@ -21,7 +21,7 @@ var nodemailer = require("nodemailer");
 var smtpTransport = nodemailer.createTransport({
   service: "Gmail",
 	auth: {
-		user: "xxx@xxx.com",
+		user: "airforceonehackathon@gmail.com",
 		pass: "xxxxxxxx"
 	}
 });
@@ -55,8 +55,8 @@ function monitoringActivity(){
 		exec("wget -O /home/root/image.jpg http://localhost:9000/?action=snapshot", 5000);
 		//Send our email message
 		smtpTransport.sendMail({
-			from: "Vaghesh Patel <vagheshp@gmail.com>",
-			to: "Vaghesh Patel <vagheshp@gmail.com>",
+			from: "Air Force One Hackathon <airforceonehackathon@gmail.com>",
+			to: "Your Name <xxxxxx@gmail.com>",
 			subject: "Possible Intruder Alert",
       			attachments:[{   // file on disk as an attachment
             			filename: 'image.jpg',

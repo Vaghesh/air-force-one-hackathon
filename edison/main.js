@@ -52,7 +52,7 @@ function monitoringActivity(){
 	//Do stuff if our sensor is read HIGH
 	if(motionSensorTriggered){
 		deviceClient.publish("status","json",'{"d" : { "pir" : 1}}');
-		exec("wget -O /home/root/image.jpg http://webcam.local:9000/?action=snapshot", 5000);
+		exec("wget -O /home/root/image.jpg http://localhost:9000/?action=snapshot", 5000);
 		//Send our email message
 		smtpTransport.sendMail({
 			from: "Vaghesh Patel <vagheshp@gmail.com>",

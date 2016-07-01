@@ -67,7 +67,7 @@ function monitoringActivity(){
 			if(error){
 				console.log(error);
 			}else{
-				console.log("Message sent: " + response.message);
+				console.log("Email Sent");
 			}
 			smtpTransport.close();
 		});

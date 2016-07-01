@@ -84,19 +84,19 @@ function monitoringActivity(){
 
 function periodicActivity()
 {
-  if (monitoring == false && button.value()){
-    console.log("Monitoring")
-    writeLCD("Monitoring",255,0,0)
+  if (monitoring === false && button.value()){
+    console.log("Monitoring");
+    writeLCD("Monitoring",255,0,0);
     monitoring = true;
     intervalId = setInterval(monitoringActivity,10000);
   }
-  else if (monitoring == true && button.value()) {
-    console.log("Not Monitoring")
-    writeLCD("Not Monitoring",0,0,255)
+  else if (monitoring === true && button.value()) {
+    console.log("Not Monitoring");
+    writeLCD("Not Monitoring",0,0,255);
 	clearInterval(intervalId);
     monitoring = false;
   }
 }
 
-console.log("Press button to Monitor your cube")
+console.log("Press button to Monitor your cube");
 setInterval(periodicActivity,1000);

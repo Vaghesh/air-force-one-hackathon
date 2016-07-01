@@ -74,17 +74,17 @@ function periodicActivity()
 	
 
     var buttonValue =  b.digitalRead('P9_22');
-  	if (monitoring == false && buttonValue){
-    	console.log("Monitoring")
+  	if (monitoring === false && buttonValue){
+    	console.log("Monitoring");
     	monitoring = true;
     	intervalId = setInterval(monitoringActivity,10000);
   }
-  else if (monitoring == true && buttonValue) {
-    	console.log("Not Monitoring")
+  else if (monitoring === true && buttonValue) {
+    	console.log("Not Monitoring");
   		clearInterval(intervalId);
     	monitoring = false;
   }
 }
 
-console.log("Press button to Monitor your cube")
+console.log("Press button to Monitor your cube");
 setInterval(periodicActivity,1000);

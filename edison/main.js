@@ -106,6 +106,6 @@ function periodicActivity()
 }
 
 
-writeLCD("Initializing", 0,0,255);
+writeLCD("Initializing",0,255,0);
 console.log("Press button to Monitor your cube");
 setInterval(periodicActivity,1000);

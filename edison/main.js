@@ -99,7 +99,7 @@ function monitoringActivity(){
 	return;
 }
 
-// Loop to check that 
+// Loop to check the button value every second. 
 function periodicActivity()
 {
   if (monitoring === false && button.value()){

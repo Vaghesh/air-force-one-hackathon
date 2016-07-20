@@ -45,7 +45,9 @@ function writeLCD(lcdtext,r,g,b){
   mylcd.write(lcdtext);
 }
 
-
+function sendToCloud(value){
+	deviceClient.publish("status","json",'{"d" : { "pir" : '+ value +'}}');
+} 
 
 
 
@@ -90,11 +92,11 @@ function readTouchSensor(){
 function monitoringActivity(){
 	var triggered = readPIR()
 	if(triggered){
-		deviceClient.publish("status","json",'{"d" : { "pir" : 1}}');
+		sendToCloud(1);
 		sendEmail();
 	}
 	else{
-		deviceClient.publish("status","json",'{"d" : { "pir" : 0}}');
+		sendToCloud(0);
 	}
 	return;
 }

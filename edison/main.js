@@ -2,7 +2,6 @@
 // Required Packages
 var mraa = require('mraa');
 var groveSensor = require('jsupm_grove');
-var sensorModule = require('jsupm_ttp223');
 var exec = require('sync-exec');
 var Client = require("ibmiotf");
 var nodemailer = require("nodemailer");
@@ -12,7 +11,8 @@ var nodemailer = require("nodemailer");
 // Initialization of GPIO Pins, Variables and Configurations for Email and Cloud Connectivity
 var PIRSensor = new mraa.Gpio(5);
 PIRSensor.dir(mraa.DIR_IN);
-var touchSensor = new sensorModule.TTP223(4);
+var touchSensor = new mraa.Gpio(4);
+touchSensor.dir(mraa.DIR_IN);
 var button = new groveSensor.GroveButton(6);
 var mylcd = new (require("jsupm_i2clcd").Jhd1313m1)(6, 0x3E, 0x62);
 var monitoring = false;
@@ -75,22 +75,11 @@ function sendEmail()
 	});	
 }
 
-// Function to Read PIR value
-function readPIR(){
-	return PIRSensor.read();	
-}
-
-// Function to Read Button Value 
-function readTouchSensor(){
-	return touchSensor.isPressed();
-}
-
-
 
 
 // Function  to start Monitoring your cube
 function monitoringActivity(){
-	var triggered = readPIR()
+	var triggered = PIRSensor.read()
 	if(triggered){
 		sendToCloud(1);
 		sendEmail();

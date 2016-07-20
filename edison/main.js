@@ -37,7 +37,6 @@ deviceClient.connect();
 
 
 
-
 // Function to write at LCD. Pass parameter LCD text and Red, Green, Blue Colors
 function writeLCD(lcdtext,r,g,b){
   mylcd.clear();
@@ -48,7 +47,6 @@ function writeLCD(lcdtext,r,g,b){
 function sendToCloud(value){
 	deviceClient.publish("status","json",'{"d" : { "pir" : '+ value +'}}');
 } 
-
 
 
 

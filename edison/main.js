@@ -56,8 +56,8 @@ function sendEmail()
 	exec("wget -O /home/root/image.jpg http://localhost:9000/?action=snapshot", 5000);
 	smtpTransport.sendMail({
 		from: "Air Force One Hackathon <airforceonehackathon@gmail.com>",
-		to: "Your Name <xxxxxx@gmail.com>",
-		subject: "Possible Intruder Alert",
+		to: "Air Force One Hackathon <airforceonehackathon@gmail.com>",
+		subject: "Possible Intruder Alert - <<Your Name>>",
       		attachments:[{   // file on disk as an attachment
             		filename: 'image.jpg',
             		path: '/home/root/image.jpg' // stream this file
